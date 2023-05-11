@@ -12,10 +12,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float countTime = 5.0f;
     Vector2 destination;
 
+    public GameObject GameManager;
+    private GameManager GM;
+
     public void Start()
     {
+        GM = GameManager.GetComponent<GameManager>();
         SetColor(Player, Color.gray);
-        StartCoroutine(Counter(countTime));
         destination = StartMarker.transform.position;
     }
 
@@ -28,30 +31,35 @@ public class PlayerController : MonoBehaviour
     public void OnBunny()
     {
         SetColor(Player, Color.green);
+        GM.SetOutfit(1);
     }
 
     //When BIRD outfit is selected
     public void OnBird()
     {
         SetColor(Player, Color.red);
+        GM.SetOutfit(2);
     }
 
     //When DOG outfit is selected
     public void OnDog()
     {
         SetColor(Player, Color.yellow);
+        GM.SetOutfit(3);
     }
 
     //When FISH outfit is selected
     public void OnFish()
     {
         SetColor(Player, Color.blue);
+        GM.SetOutfit(4);
     }
 
     //When CAT outfit is selected
     public void OnCat()
     {
         SetColor(Player, Color.black);
+        GM.SetOutfit(5);
     }
 
     //When ANY outfit is selected
@@ -63,12 +71,5 @@ public class PlayerController : MonoBehaviour
     void SetColor(SpriteRenderer sprite, Color color)
     {
         sprite.color = color;
-    }
-
-    IEnumerator Counter(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        destination = StartMarker.transform.position;
-        SetColor(Player, Color.gray);
     }
 }
