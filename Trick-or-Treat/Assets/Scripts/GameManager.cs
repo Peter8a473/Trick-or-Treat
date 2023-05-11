@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -9,10 +10,21 @@ public class GameManager : MonoBehaviour
     const int EMPTY = 0;   
     const bool INVALID = false;
     const bool VALID = true;
+    const bool OFF = false;
+    const bool ON = true;
 
+    //UI
     int score;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI doorText;
+    public GameObject Check;
+
+    //InputButtons
+    public GameObject BunnyButton;
+    public GameObject BirdButton;
+    public GameObject DogButton;
+    public GameObject FishButton;
+    public GameObject CatButton;
 
     //Records the outfit/door combinations
     public int[,] outfitCheck = new int[4, 5];
@@ -22,6 +34,10 @@ public class GameManager : MonoBehaviour
     int doorRobot = 5;
     int doorSpider = 5;
     int doorVampire = 5;
+    bool princessSafe = OFF;
+    bool robotSafe = OFF;
+    bool spiderSafe = OFF;
+    bool vampireSafe = OFF;
 
     //Sets the outfit/door
     int door;
@@ -44,7 +60,13 @@ public class GameManager : MonoBehaviour
             isInput = false;
             if (CheckOutfit())
             {
-                PlayRound();
+                StartCoroutine(DoCheck1a());
+                StartCoroutine(DoCheck2());
+            }
+            //Loses Game
+            else
+            {
+                StartCoroutine(DoCheck1b());
             }
         }
     }
@@ -52,6 +74,7 @@ public class GameManager : MonoBehaviour
     //Resets variables for another game
     void SetGame()
     {
+        Check.SetActive(false);
         score = 0;
         doorPrincess = 5;
         doorRobot = 5;
@@ -69,6 +92,7 @@ public class GameManager : MonoBehaviour
     //Completes a single round of play
     void PlayRound()
     {
+        EnableButtons(ON);
         SetDoor();
     }
 
@@ -105,6 +129,11 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
+        //Wins Game
+        else if(princessSafe && robotSafe && spiderSafe && vampireSafe)
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
         else
         {
             SetDoor();
@@ -116,22 +145,30 @@ public class GameManager : MonoBehaviour
     {
         if((door == 1) && (doorPrincess == 0))
         {
+            princessSafe = ON;
             return INVALID;
         }
         else if((door == 2) && (doorRobot == 0))
         {
+            robotSafe = ON;
             return INVALID;
         }
         else if((door == 3) && (doorSpider == 0))
         {
+            spiderSafe = ON;
             return INVALID;
         }
         else if((door == 4) && (doorVampire == 0))
         {
+            vampireSafe = ON;
             return INVALID;
         }
         else
         {
+            princessSafe = OFF;
+            robotSafe = OFF;
+            spiderSafe = OFF;
+            vampireSafe = OFF;
             return VALID;
         }
     }
@@ -139,6 +176,7 @@ public class GameManager : MonoBehaviour
     //Interprets the player input
     public void SetOutfit(int input)
     {
+        EnableButtons(OFF);
         outfit = input;
         isInput = true;
     }
@@ -156,5 +194,53 @@ public class GameManager : MonoBehaviour
         {
             return INVALID;
         }
+    }
+
+    void EnableButtons(bool invert)
+    {
+        if(invert)
+        {
+            BunnyButton.SetActive(ON);
+            BirdButton.SetActive(ON);
+            DogButton.SetActive(ON);
+            FishButton.SetActive(ON);
+            CatButton.SetActive(ON);
+        }
+        else
+        {
+            BunnyButton.SetActive(OFF);
+            BirdButton.SetActive(OFF);
+            DogButton.SetActive(OFF);
+            FishButton.SetActive(OFF);
+            CatButton.SetActive(OFF);
+        }
+    }
+
+    void SetColor(SpriteRenderer sprite, Color color)
+    {
+        sprite.color = color;
+    }
+
+    //When completed a round
+    IEnumerator DoCheck1a()
+    {
+        yield return new WaitForSeconds(1.0f);
+        Check.SetActive(true);
+    }
+
+    //When failed a round
+    IEnumerator DoCheck1b()
+    {
+        yield return new WaitForSeconds(1.0f);
+        Check.SetActive(true);
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    //Sets up the next round
+    IEnumerator DoCheck2()
+    {
+        yield return new WaitForSeconds(2.0f);
+        Check.SetActive(false);
+        PlayRound();
     }
 }

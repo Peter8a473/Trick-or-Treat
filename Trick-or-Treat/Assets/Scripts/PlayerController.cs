@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
     //When ANY outfit is selected
     public void OnOutfit()
     {
-        destination = EndMarker.transform.position;
+        
     }
 
     void SetColor(SpriteRenderer sprite, Color color)
