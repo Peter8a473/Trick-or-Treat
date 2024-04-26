@@ -12,13 +12,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float countTime = 5.0f;
     Vector2 destination;
 
-    public GameObject GameManager;
-    private GameManager GM;
+    public GameManager GM;
 
     public void Start()
     {
-        GM = GameManager.GetComponent<GameManager>();
         SetColor(Player, Color.gray);
+    }
+
+    public void SetStart()
+    {
         destination = StartMarker.transform.position;
     }
 
@@ -65,7 +67,7 @@ public class PlayerController : MonoBehaviour
     //When ANY outfit is selected
     public void OnOutfit()
     {
-        
+        destination = EndMarker.transform.position;
     }
 
     void SetColor(SpriteRenderer sprite, Color color)

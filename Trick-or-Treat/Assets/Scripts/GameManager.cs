@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -45,7 +46,9 @@ public class GameManager : MonoBehaviour
     int random;
     bool isInput;
 
-    void Start()
+    public PlayerController PC;
+
+    void Awake()
     {
         SetGame();
         PlayRound();
@@ -92,6 +95,7 @@ public class GameManager : MonoBehaviour
     //Completes a single round of play
     void PlayRound()
     {
+        PC.SetStart();
         EnableButtons(ON);
         SetDoor();
     }
@@ -225,14 +229,16 @@ public class GameManager : MonoBehaviour
     IEnumerator DoCheck1a()
     {
         yield return new WaitForSeconds(1.0f);
+        Check.GetComponent<Image>().color = Color.green;
         Check.SetActive(true);
     }
 
     //When failed a round
     IEnumerator DoCheck1b()
     {
-        yield return new WaitForSeconds(1.0f);
+        Check.GetComponent<Image>().color = Color.red;
         Check.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
         SceneManager.LoadScene("MainMenu");
     }
 
