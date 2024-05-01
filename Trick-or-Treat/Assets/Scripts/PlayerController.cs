@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer Player;
+    /*[SerializeField] private SpriteRenderer Player;
     [SerializeField] private Transform StartMarker;
     [SerializeField] private Transform EndMarker;
     [SerializeField] private float countTime = 5.0f;
@@ -73,5 +73,5 @@ public class PlayerController : MonoBehaviour
     void SetColor(SpriteRenderer sprite, Color color)
     {
         sprite.color = color;
-    }
+    }*/
 }

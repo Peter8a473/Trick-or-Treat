@@ -7,7 +7,10 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    const int FULL = 1;
+    public static int costumes = 4;
+    public static int people = 4;
+
+    /*const int FULL = 1;
     const int EMPTY = 0;   
     const bool INVALID = false;
     const bool VALID = true;
@@ -248,5 +251,5 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         Check.SetActive(false);
         PlayRound();
-    }
+    }*/
 }
