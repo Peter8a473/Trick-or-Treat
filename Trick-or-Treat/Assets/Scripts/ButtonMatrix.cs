@@ -28,7 +28,7 @@ public class ButtonMatrix : MonoBehaviour
         new Vector2(98.67f, 196.75f)
     };
 
-    int refInt = 16;
+    public int refInt = 4;
 
     void Awake()
     {
@@ -54,12 +54,13 @@ public class ButtonMatrix : MonoBehaviour
         Vector2 pos = refPosition[refInt - 4];
         int k = 0;
         float increment = 0;
-        float scale = 1;
+        float scale = 0;
+        int fullRows = 0;     
 
         if (sqrt == 2)
         {
             increment = 112.5f;
-            scale = 2;
+            scale = 2f;
         }
         else if (sqrt == 3)
         {
@@ -69,14 +70,22 @@ public class ButtonMatrix : MonoBehaviour
         else if (sqrt == 4) 
         {
             increment = 56f;
-            scale = 1;
+            scale = 1f;
         }
+
+        int tempSqrt = sqrt;
+        if (refInt == 5 || refInt == 10 || refInt == 11)
+            tempSqrt--;
+        fullRows = refInt % tempSqrt;
+        if (fullRows == 0)
+            fullRows = tempSqrt;
 
         while (k < refInt)
         {
-            if (refInt - k >= sqrt)
+            if (fullRows > 0)
             {
                 k = FillRow(pos, sqrt, k, increment);
+                fullRows--;
             }
             else
             {
