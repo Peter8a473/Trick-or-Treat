@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class ButtonMatrix : MonoBehaviour
 {
-    [SerializeField] private Button[] outfitButtons = new Button[16];
+    public static ButtonMatrix Instance;
+
+    [SerializeField] public Button[] outfitButtons = new Button[16];
     private float buttonSize = 105f;
     private Vector2[] refPosition = 
     {
@@ -32,18 +34,14 @@ public class ButtonMatrix : MonoBehaviour
 
     void Awake()
     {
+        Instance = this;
+        refInt = GameManager.Instance.costumes;
         ArrangeOutfitButtons();
     }
 
     void Update()
     {
 
-    }
-
-    public void TempInput(int temp)
-    {
-        refInt = temp;
-        ArrangeOutfitButtons();
     }
 
     void ArrangeOutfitButtons()
@@ -132,9 +130,22 @@ public class ButtonMatrix : MonoBehaviour
         {
             if (i != 0)
                 pos = new Vector2(pos.x + increment, pos.y);
-            Debug.Log(k);
             outfitButtons[k++].gameObject.transform.position = pos;
         }
         return k;
+    }
+
+    public void ToggleButtons(bool state)
+    {
+        foreach (Button button in outfitButtons)
+        {
+            if (button != null)
+                button.gameObject.SetActive(state);
+        }
+    }
+
+    public void ButtonClick(int index)
+    {
+        GameManager.Instance.currentOutfitIndex = index;
     }
 }

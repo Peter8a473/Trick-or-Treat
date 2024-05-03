@@ -7,249 +7,120 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public static int costumes = 4;
-    public static int people = 4;
+    public static GameManager Instance;
+    public int costumes = 9;
+    public int people = 4;
+    bool[,] outfitCheck = new bool[16, 16];
 
-    /*const int FULL = 1;
-    const int EMPTY = 0;   
-    const bool INVALID = false;
-    const bool VALID = true;
-    const bool OFF = false;
-    const bool ON = true;
+    public int[] counter = new int[16];
+    public int numCounter;
+    public int currentDoorIndex = -1;
+    public int currentOutfitIndex = -1;
 
-    //UI
-    int score;
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI doorText;
-    public GameObject Check;
+    [SerializeField] float timerDuration;
+    [SerializeField] Image timerWheel;
+    bool skipped = false;
 
-    //InputButtons
-    public GameObject BunnyButton;
-    public GameObject BirdButton;
-    public GameObject DogButton;
-    public GameObject FishButton;
-    public GameObject CatButton;
-
-    //Records the outfit/door combinations
-    public int[,] outfitCheck = new int[4, 5];
-
-    //Sets the amount of times a person can answer the door
-    int doorPrincess = 5;
-    int doorRobot = 5;
-    int doorSpider = 5;
-    int doorVampire = 5;
-    bool princessSafe = OFF;
-    bool robotSafe = OFF;
-    bool spiderSafe = OFF;
-    bool vampireSafe = OFF;
-
-    //Sets the outfit/door
-    int door;
-    int outfit;
-    int random;
-    bool isInput;
-
-    public PlayerController PC;
-
+    [SerializeField] Image outfit;
+    
     void Awake()
     {
+        Instance = this;
         SetGame();
-        PlayRound();
+        StartCoroutine("PlayRound");
     }
 
-    void Update()
-    {
-        scoreText.text = score.ToString();
-
-        if (isInput)
-        {
-            isInput = false;
-            if (CheckOutfit())
-            {
-                StartCoroutine(DoCheck1a());
-                StartCoroutine(DoCheck2());
-            }
-            //Loses Game
-            else
-            {
-                StartCoroutine(DoCheck1b());
-            }
-        }
-    }
-
-    //Resets variables for another game
     void SetGame()
     {
-        Check.SetActive(false);
-        score = 0;
-        doorPrincess = 5;
-        doorRobot = 5;
-        doorSpider = 5;
-        doorVampire = 5;
-        for (int i = 0; i < 4; ++i)
+        numCounter = people;
+        for (int i = 0; i < costumes; i++)
         {
-            for (int j = 0; j < 5; ++j)
+            for (int j = 0; j < people; j++)
             {
-                outfitCheck[i, j] = EMPTY;
+                outfitCheck[i,j] = false;
+                counter[j] = costumes;
             }
         }
     }
 
-    //Completes a single round of play
-    void PlayRound()
+    IEnumerator PlayRound()
     {
-        PC.SetStart();
-        EnableButtons(ON);
-        SetDoor();
-    }
+        yield return new WaitForSeconds(0.5f);
+        currentOutfitIndex = -1;
+        outfit.sprite = null;
 
-    //Assigns a person to go to the door
-    void SetDoor()
-    {
-        door = Random.Range(1,5);
-        if(CheckDoor(door))
+        bool cont = true;
+        while (numCounter > 0)
         {
-            switch (door) 
+            currentDoorIndex = fn.RandomInt(0, people);
+            if (counter[currentDoorIndex] > 0)
+                break;
+        }
+
+        SilhouetteHandler.Instance.Go(currentDoorIndex);
+
+        float timer = 0f;
+        skipped = false;
+        timerWheel.gameObject.SetActive(true);
+        ButtonMatrix.Instance.ToggleButtons(true);
+        while (timer < timerDuration && !skipped)
+        {
+            timerWheel.fillAmount = 1 - (timer / timerDuration);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        timerWheel.gameObject.SetActive(false);
+        ButtonMatrix.Instance.ToggleButtons(false);
+
+        if (Check(currentOutfitIndex, currentDoorIndex))
+        {
+            if (numCounter <= 0)
             {
-                case 1:
-                doorText.text = "Princess";
-                doorPrincess--;
-                break;
-
-                case 2:
-                doorText.text = "Robot";
-                doorRobot--;
-                break;
-
-                case 3:
-                doorText.text = "Spider";
-                doorSpider--;
-                break;
-
-                case 4:
-                doorText.text = "Vampire";
-                doorVampire--;
-                break;
-
-                default:
-                SetDoor();
-                break;
+                Debug.Log("Won!");
+            }
+            else
+            {
+                StartCoroutine("PlayRound");
             }
         }
-        //Wins Game
-        else if(princessSafe && robotSafe && spiderSafe && vampireSafe)
-        {
-            SceneManager.LoadScene("MainMenu");
-        }
         else
         {
-            SetDoor();
+            Debug.Log("Lost!");
         }
     }
 
-    //Makes sure that one person doesn't occur 5+ times
-    bool CheckDoor(int door)
+    public void SetOutfit()
     {
-        if((door == 1) && (doorPrincess == 0))
-        {
-            princessSafe = ON;
-            return INVALID;
-        }
-        else if((door == 2) && (doorRobot == 0))
-        {
-            robotSafe = ON;
-            return INVALID;
-        }
-        else if((door == 3) && (doorSpider == 0))
-        {
-            spiderSafe = ON;
-            return INVALID;
-        }
-        else if((door == 4) && (doorVampire == 0))
-        {
-            vampireSafe = ON;
-            return INVALID;
-        }
-        else
-        {
-            princessSafe = OFF;
-            robotSafe = OFF;
-            spiderSafe = OFF;
-            vampireSafe = OFF;
-            return VALID;
-        }
+        outfit.sprite = ButtonMatrix.Instance.outfitButtons[currentOutfitIndex].GetComponent<Image>().sprite;
     }
 
-    //Interprets the player input
-    public void SetOutfit(int input)
+    bool Check(int outfitIdx, int doorIdx)
     {
-        EnableButtons(OFF);
-        outfit = input;
-        isInput = true;
-    }
+        if (outfitIdx < 0 || outfitCheck[outfitIdx,doorIdx])
+            return false;
 
-    //Checks the outfit/door combination
-    bool CheckOutfit()
-    {
-        if (outfitCheck[door - 1, outfit - 1] == EMPTY)
+        outfitCheck[outfitIdx,doorIdx] = true;
+
+        if (--counter[doorIdx] <= 0)
         {
-            outfitCheck[door - 1, outfit - 1] = FULL;
-            score++;
-            return VALID;
+            numCounter--;
         }
-        else
-        {
-            return INVALID;
-        }
+
+        return true;
     }
 
-    void EnableButtons(bool invert)
+
+    int[] Swap(int[] arr, int index1, int index2)
     {
-        if(invert)
-        {
-            BunnyButton.SetActive(ON);
-            BirdButton.SetActive(ON);
-            DogButton.SetActive(ON);
-            FishButton.SetActive(ON);
-            CatButton.SetActive(ON);
-        }
-        else
-        {
-            BunnyButton.SetActive(OFF);
-            BirdButton.SetActive(OFF);
-            DogButton.SetActive(OFF);
-            FishButton.SetActive(OFF);
-            CatButton.SetActive(OFF);
-        }
+        int temp = arr[index1];
+        arr[index1] = arr[index2];
+        arr[index2] = temp;
+        return arr;
     }
 
-    void SetColor(SpriteRenderer sprite, Color color)
+    public void Skip()
     {
-        sprite.color = color;
+        skipped = true;
+        SilhouetteHandler.Instance.SpeedUp();
     }
-
-    //When completed a round
-    IEnumerator DoCheck1a()
-    {
-        yield return new WaitForSeconds(1.0f);
-        Check.GetComponent<Image>().color = Color.green;
-        Check.SetActive(true);
-    }
-
-    //When failed a round
-    IEnumerator DoCheck1b()
-    {
-        Check.GetComponent<Image>().color = Color.red;
-        Check.SetActive(true);
-        yield return new WaitForSeconds(1.0f);
-        SceneManager.LoadScene("MainMenu");
-    }
-
-    //Sets up the next round
-    IEnumerator DoCheck2()
-    {
-        yield return new WaitForSeconds(2.0f);
-        Check.SetActive(false);
-        PlayRound();
-    }*/
 }
