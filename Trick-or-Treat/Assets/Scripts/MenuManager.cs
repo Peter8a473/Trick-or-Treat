@@ -5,13 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    public void OnPlay()
+    public void OnPlay(string scene)
     {
-        SceneManager.LoadScene("GameScene");
-    }
-
-    public void OnQuit()
-    {
-        Application.Quit();
+        SceneManager.LoadScene(scene);
     }
 }
