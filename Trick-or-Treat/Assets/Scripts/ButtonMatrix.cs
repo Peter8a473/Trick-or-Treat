@@ -9,26 +9,11 @@ public class ButtonMatrix : MonoBehaviour
 
     [SerializeField] public Button[] outfitButtons = new Button[16];
     private float buttonSize = 105f;
-    private Vector2[] refPosition = 
-    {
-        new Vector2(126.75f, 168.67f),
 
-        new Vector2(108f, 150f),
-        new Vector2(108f, 150f),
+    private float currentScale;
+    private Vector2 currentPosition;
 
-        new Vector2(108f, 187.5f),
-        new Vector2(108f, 187.5f),
-        new Vector2(108f, 187.5f),
-
-        new Vector2(98.67f, 168.67f),
-        new Vector2(98.67f, 168.67f),
-        new Vector2(98.67f, 168.67f),
-        
-        new Vector2(98.67f, 196.75f),
-        new Vector2(98.67f, 196.75f),
-        new Vector2(98.67f, 196.75f),
-        new Vector2(98.67f, 196.75f)
-    };
+    private Vector2[] refPosition = new Vector2[13];
 
     public int refInt = 4;
 
@@ -36,12 +21,38 @@ public class ButtonMatrix : MonoBehaviour
     {
         Instance = this;
         refInt = GameManager.Instance.costumes;
+
+        currentPosition = gameObject.transform.position;
+        currentScale = currentPosition.y * 2;
+        
+        AssignStartingPositions();
+
         ArrangeOutfitButtons();
     }
 
-    void Update()
+    void AssignStartingPositions()
     {
+        // 2 x 2 Grid
+        // (4)
+        refPosition[0] = new Vector2 (currentPosition.x - (currentScale / 4), 3 * currentPosition.y / 2);
 
+        // 3 x 3 Grid 
+        // (9 -> 8, 7, *6, *5)
+        refPosition[5] = new Vector2 (currentPosition.x - (currentScale / 3), 5 * currentPosition.y / 3);
+        for (int i = 4; i > 0; i--)
+            refPosition[i] = refPosition[5];
+
+        for (int i = 2; i > 0; i--)
+            refPosition[i] = new Vector2 (refPosition[i].x, refPosition[i].y - (currentScale / 6));
+
+        // 4 x 4 Grid 
+        // (16 -> 15, 14, 13, *12, *11, *10)
+        refPosition[12] = new Vector2 (currentPosition.x - (3 * currentScale / 8), 7 * currentPosition.y / 4);
+        for (int i = 11; i > 5; i--)
+            refPosition[i] = refPosition[12];
+
+        for (int i = 8; i > 5; i--)
+            refPosition[i] = new Vector2 (refPosition[i].x, refPosition[i].y - (currentScale / 8));
     }
 
     void ArrangeOutfitButtons()
@@ -53,23 +64,10 @@ public class ButtonMatrix : MonoBehaviour
         int k = 0;
         float increment = 0;
         float scale = 0;
-        int fullRows = 0;     
+        int fullRows = 0; 
 
-        if (sqrt == 2)
-        {
-            increment = 112.5f;
-            scale = 2f;
-        }
-        else if (sqrt == 3)
-        {
-            increment = 75f;
-            scale = 4f / 3f;
-        }
-        else if (sqrt == 4) 
-        {
-            increment = 56f;
-            scale = 1f;
-        }
+        increment = currentScale / sqrt;
+        scale = 4f / sqrt;    
 
         int tempSqrt = sqrt;
         if (refInt == 5 || refInt == 10 || refInt == 11)

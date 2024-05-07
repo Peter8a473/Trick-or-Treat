@@ -1791,8 +1791,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fd28ab092bdc4043b78e696f6a25068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  costumes: 9
-  people: 4
+  costumes: 11
+  people: 16
   counter: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   numCounter: 0
   currentDoorIndex: -1

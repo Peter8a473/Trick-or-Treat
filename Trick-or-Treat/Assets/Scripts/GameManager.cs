@@ -8,7 +8,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public int costumes = 9;
+    public int costumes = 4;
     public int people = 4;
     bool[,] outfitCheck = new bool[16, 16];
 
