@@ -20,7 +20,7 @@ public class ButtonMatrix : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        refInt = GameManager.Instance.costumes;
+        refInt = Customize.costumes;
 
         currentPosition = gameObject.transform.position;
         currentScale = currentPosition.y * 2;

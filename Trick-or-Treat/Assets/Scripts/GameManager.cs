@@ -26,8 +26,16 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        LoadData();
         SetGame();
         StartCoroutine("PlayRound");
+    }
+
+    void LoadData()
+    {
+        costumes = Customize.costumes;
+        people = Customize.people;
+        timerDuration = (float) Customize.timer;
     }
 
     void SetGame()

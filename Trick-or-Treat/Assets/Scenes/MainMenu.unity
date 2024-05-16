@@ -307,7 +307,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1592780995}
+      - m_Target: {fileID: 1423909779}
         m_TargetAssemblyTypeName: Options, Assembly-CSharp
         m_MethodName: ChangeSFX
         m_Mode: 0
@@ -816,7 +816,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1592780995}
+      - m_Target: {fileID: 1423909779}
         m_TargetAssemblyTypeName: Options, Assembly-CSharp
         m_MethodName: ChangeBGM
         m_Mode: 0
@@ -3398,7 +3398,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1646229667}
+      - m_Target: {fileID: 1423909781}
         m_TargetAssemblyTypeName: Customize, Assembly-CSharp
         m_MethodName: ChangeCostumes
         m_Mode: 0
@@ -3632,7 +3632,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1100404081}
-  - component: {fileID: 1100404082}
   m_Layer: 0
   m_Name: CostumesPanel
   m_TagString: Untagged
@@ -3662,18 +3661,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1100404082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1100404080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb6bdfd8820e8554a8ffae47d944ba88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1121857828
 GameObject:
   m_ObjectHideFlags: 0
@@ -3973,7 +3960,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1592780995}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Options, Assembly-CSharp
         m_MethodName: ToggleBGM
         m_Mode: 0
@@ -4298,7 +4285,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1592780995}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Options, Assembly-CSharp
         m_MethodName: ToggleBGM
         m_Mode: 0
@@ -4442,7 +4429,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1646229667}
+      - m_Target: {fileID: 1423909781}
         m_TargetAssemblyTypeName: Customize, Assembly-CSharp
         m_MethodName: ChangeTimer
         m_Mode: 0
@@ -4795,6 +4782,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1423909777}
   - component: {fileID: 1423909778}
+  - component: {fileID: 1423909781}
+  - component: {fileID: 1423909780}
+  - component: {fileID: 1423909779}
   m_Layer: 0
   m_Name: MainPanel
   m_TagString: Untagged
@@ -4837,6 +4827,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b147a3f339656fc41ad731dd71736a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1423909779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423909776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e3a9f1b7a7cfc4b9d1a5809c0baeb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 51905804a20ce0b41ade69f928555a95, type: 2}
+  sliders:
+  - {fileID: 264453092}
+  - {fileID: 95517082}
+  toggles:
+  - {fileID: 1463433770}
+  - {fileID: 1912714468}
+--- !u!114 &1423909780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423909776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb6bdfd8820e8554a8ffae47d944ba88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1423909781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423909776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c10b5030860124eba1d5aec1f18494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  costumeSlider: {fileID: 998873215}
+  costumeText: {fileID: 491447088}
+  peopleSlider: {fileID: 1596671688}
+  peopleText: {fileID: 685353579}
+  timerSlider: {fileID: 1292510719}
+  timerText: {fileID: 617638778}
 --- !u!1 &1436138733
 GameObject:
   m_ObjectHideFlags: 0
@@ -5283,7 +5322,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1592780995}
+      - m_Target: {fileID: 1423909779}
         m_TargetAssemblyTypeName: Options, Assembly-CSharp
         m_MethodName: ToggleBGM
         m_Mode: 0
@@ -5617,7 +5656,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1592780994}
-  - component: {fileID: 1592780995}
   m_Layer: 0
   m_Name: OptionsPanel
   m_TagString: Untagged
@@ -5648,25 +5686,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1592780995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1592780993}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88e3a9f1b7a7cfc4b9d1a5809c0baeb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: 51905804a20ce0b41ade69f928555a95, type: 2}
-  sliders:
-  - {fileID: 264453092}
-  - {fileID: 95517082}
-  savedVal:
-  - 0
-  - 0
 --- !u!1 &1596671686
 GameObject:
   m_ObjectHideFlags: 0
@@ -5760,7 +5779,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1646229667}
+      - m_Target: {fileID: 1423909781}
         m_TargetAssemblyTypeName: Customize, Assembly-CSharp
         m_MethodName: ChangePeople
         m_Mode: 0
@@ -5819,7 +5838,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1646229666}
-  - component: {fileID: 1646229667}
   m_Layer: 0
   m_Name: CustomizePanel
   m_TagString: Untagged
@@ -5858,24 +5876,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1646229667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1646229665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51c10b5030860124eba1d5aec1f18494, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  costumes: 0
-  costumeText: {fileID: 491447088}
-  people: 0
-  peopleText: {fileID: 685353579}
-  timer: 0
-  timerText: {fileID: 617638778}
 --- !u!1 &1655217993
 GameObject:
   m_ObjectHideFlags: 0
@@ -6039,7 +6039,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1592780995}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Options, Assembly-CSharp
         m_MethodName: ToggleBGM
         m_Mode: 0
@@ -7340,7 +7340,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1592780995}
+      - m_Target: {fileID: 1423909779}
         m_TargetAssemblyTypeName: Options, Assembly-CSharp
         m_MethodName: ToggleSFX
         m_Mode: 0
@@ -7529,6 +7529,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1423909779}
+        m_TargetAssemblyTypeName: Options, Assembly-CSharp
+        m_MethodName: SaveOptions
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7964,6 +7976,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1423909781}
+        m_TargetAssemblyTypeName: Customize, Assembly-CSharp
+        m_MethodName: SaveCustom
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

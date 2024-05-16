@@ -10,13 +10,11 @@ public class SliderPopup : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("Enter");
         Popup.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData) 
     {  
-        Debug.Log("Exit");
         Popup.SetActive(false);
     }
 }

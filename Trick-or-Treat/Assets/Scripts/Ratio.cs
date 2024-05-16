@@ -11,7 +11,6 @@ public class Ratio : MonoBehaviour
     void Awake()
     {
         currentWidth = Screen.width;
-        Debug.Log(idealWidth / currentWidth);
     }
 
     // Update is called once per frame
