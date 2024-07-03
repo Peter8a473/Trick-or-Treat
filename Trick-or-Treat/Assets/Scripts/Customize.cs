@@ -24,8 +24,11 @@ public class Customize : MonoBehaviour
     {
         Instance = this;
 
+        // If there are settings saved, load them
         if (PlayerPrefs.GetInt("CustomSaved") == 1) { LoadCustom(); }
-        else { SaveCustom(); PlayerPrefs.SetInt("CustomSaved", 1); }
+        else { DefaultSettings(); SaveCustom(); PlayerPrefs.SetInt("CustomSaved", 1); }
+
+        Debug.Log(costumes);
     }
 
     void Update()
@@ -34,9 +37,15 @@ public class Customize : MonoBehaviour
             PlayerPrefs.SetInt("CustomSaved", 0);
     }
 
+    void DefaultSettings()
+    {
+        costumes = 4;
+        people = 2;
+        timer = 2;
+    }
+
     public void LoadCustom()
     {
-        Debug.Log("Load");
         // Retrieve Data //
         costumes = PlayerPrefs.GetInt("costumes");
         people = PlayerPrefs.GetInt("people");
@@ -62,6 +71,10 @@ public class Customize : MonoBehaviour
 
     public void ChangeCostumes(float amount)
     {
+        int temp = (int) amount - costumes;
+        if (temp > 0) { Costumes.Instance.IncrementSelection(Mathf.Abs(temp)); }
+        else if (temp < 0) { Costumes.Instance.DecrementSelection(Mathf.Abs(temp)); }
+        
         costumes = (int) amount;
         costumeText.text = "" + costumes;
     }
