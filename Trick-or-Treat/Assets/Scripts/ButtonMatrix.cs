@@ -9,6 +9,7 @@ public class ButtonMatrix : MonoBehaviour
 
     [SerializeField] public Button[] outfitButtons = new Button[16];
     private float buttonSize = 105f;
+    public int[] newIndexes = new int[16];
 
     private float currentScale;
     private Vector2 currentPosition;
@@ -58,6 +59,7 @@ public class ButtonMatrix : MonoBehaviour
     void ArrangeOutfitButtons()
     {
         GetOutfitButtons();
+        ArrayOfNewIndexes();
         
         int sqrt = GetSquareRoot(refInt);
         Vector2 pos = refPosition[refInt - 4];
@@ -97,12 +99,15 @@ public class ButtonMatrix : MonoBehaviour
             if (i < k)
             {
                 outfitButtons[i].gameObject.transform.localScale = new Vector3 (scale, scale, 0f);
+                outfitButtons[i].GetComponent<Image>().sprite = Costumes.costumeIMG[newIndexes[i]];
             }
             else
             {
                 Destroy(outfitButtons[i].gameObject);
             }
         }
+
+        
     }
     
     void GetOutfitButtons()
@@ -131,6 +136,24 @@ public class ButtonMatrix : MonoBehaviour
             outfitButtons[k++].gameObject.transform.position = pos;
         }
         return k;
+    }
+
+    void ArrayOfNewIndexes()
+    {
+        int temp = 0;
+        Debug.Log(1);
+        for (int i = 0; i < 16; i++)
+        {
+            Debug.Log(i);
+            if (temp == Customize.costumes)
+                break;
+
+            if (Costumes.selection[i])
+            {
+                Debug.Log(true);
+                newIndexes[temp++] = i;
+            }
+        }
     }
 
     public void ToggleButtons(bool state)

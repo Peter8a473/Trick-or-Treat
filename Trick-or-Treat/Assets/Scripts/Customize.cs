@@ -81,6 +81,10 @@ public class Customize : MonoBehaviour
 
     public void ChangePeople(float amount)
     {
+        int temp = (int) amount - people;
+        if (temp > 0) { People.Instance.IncrementSelection(Mathf.Abs(temp)); }
+        else if (temp < 0) { People.Instance.DecrementSelection(Mathf.Abs(temp)); }
+
         people = (int) amount;
         peopleText.text = "" + people;
     }

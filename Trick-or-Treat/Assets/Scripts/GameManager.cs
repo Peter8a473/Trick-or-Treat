@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public int currentDoorIndex = -1;
     public int currentOutfitIndex = -1;
 
-    [SerializeField] float timerDuration;
+    public float timerDuration;
     [SerializeField] Image timerWheel;
     bool skipped = false;
 
@@ -36,6 +36,10 @@ public class GameManager : MonoBehaviour
         costumes = Customize.costumes;
         people = Customize.people;
         timerDuration = (float) Customize.timer;
+        //costumes = 4;
+        //people = 4;
+        //timerDuration = 4;
+        
     }
 
     void SetGame()

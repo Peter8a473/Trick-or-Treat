@@ -9,7 +9,7 @@ public class Costumes : MonoBehaviour
     public static Costumes Instance;
 
     public static Sprite[] costumeIMG = new Sprite[16];
-    public  bool[] selection = new bool[16];
+    public static bool[] selection = new bool[16];
 
     public int selectionCount;
     public TextMeshProUGUI selectionText;
@@ -23,7 +23,8 @@ public class Costumes : MonoBehaviour
         for (int i = 0; i < 16; i++)
         {
             selection[i] = false; // Sets all costumes to false
-            costumeIMG[i] = buttons[i].gameObject.GetComponentInChildren<Image>().sprite; // Retrieves the sprites for a static variable
+            Image[] temp = buttons[i].gameObject.GetComponentsInChildren<Image>(); // Retrieves the sprites for a static variable
+            costumeIMG[i] = temp[1].sprite;
         }
 
         // If there are costumes saved, load them
@@ -40,10 +41,9 @@ public class Costumes : MonoBehaviour
     // Initializes the costumes to a default state
     void Default()
     {
-        selectionCount = Customize.costumes;
-        Debug.Log(selectionCount);
+        selectionCount = 4;
         EnableButtons(true);
-        for (int i = 0; i < Customize.costumes; i++)
+        for (int i = 0; i < 4; i++)
         {
             buttons[i].isOn = true;
         }
@@ -69,6 +69,16 @@ public class Costumes : MonoBehaviour
 
     public void SaveCostumes()
     {
+        int h = 0;
+        while (selectionCount > 0)
+        {
+            if (!selection[h])
+            {
+                buttons[h].isOn = true;
+            }
+            h++;
+        }
+
         for (int i = 0; i < 16; i++)
         {
             if (selection[i]) { PlayerPrefs.SetInt("costume " + i.ToString(), 1); }

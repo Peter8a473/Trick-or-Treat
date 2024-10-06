@@ -952,10 +952,10 @@ MonoBehaviour:
   - {fileID: 1815275832, guid: 86be4975af9ea6c4c8a81b9aae62ae02, type: 3}
   - {fileID: 1184058117, guid: 86be4975af9ea6c4c8a81b9aae62ae02, type: 3}
   - {fileID: 499900300, guid: 86be4975af9ea6c4c8a81b9aae62ae02, type: 3}
-  startPos: {x: 320, y: 345}
-  endPos: {x: 180, y: 345}
-  baseSpeed: 50
-  skipSpeed: 500
+  startPos: {x: 535, y: 645}
+  endPos: {x: 270, y: 645}
+  baseSpeed: 300
+  skipSpeed: 1000
 --- !u!1 &560157787
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,7 +1511,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -140.1, y: -15.2}
+  m_AnchoredPosition: {x: 133, y: -15}
   m_SizeDelta: {x: 85, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &923744774

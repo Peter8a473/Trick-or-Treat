@@ -9,6 +9,7 @@ public class SilhouetteHandler : MonoBehaviour
 
     [SerializeField] GameObject silhouette;
     [SerializeField] private Sprite[] silhouetteSprites = new Sprite[16];
+    private int[] newIndexes = new int[16];
 
     [SerializeField] Vector2 startPos;
     [SerializeField] Vector2 endPos;
@@ -21,6 +22,7 @@ public class SilhouetteHandler : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        ArrayOfNewIndexes();
     }
 
     void Update()
@@ -31,6 +33,22 @@ public class SilhouetteHandler : MonoBehaviour
         }
     }
 
+    void ArrayOfNewIndexes()
+    {
+        int temp = 0;
+        for (int i = 0; i < 16; i++)
+        {
+            if (temp == Customize.people)
+                break;
+
+            if (People.selection[i])
+            {
+                newIndexes[temp] = i;
+                temp++;
+            }
+        }
+    }
+
     public void Go(int index)
     {
         StartCoroutine(WindowWalk(index));
@@ -38,18 +56,18 @@ public class SilhouetteHandler : MonoBehaviour
 
     IEnumerator WindowWalk(int index)
     {
-        speed = baseSpeed;
+        speed = baseSpeed / GameManager.Instance.timerDuration;
         silhouette.transform.position = startPos;
-        silhouette.GetComponent<Image>().sprite = silhouetteSprites[index];
+        silhouette.GetComponent<Image>().sprite = People.personIMG[newIndexes[index]];
         while (silhouette.transform.position.x > endPos.x)
         {
             silhouette.transform.Translate(Vector2.left * Time.deltaTime * speed);
             yield return null;
         }
     }
-    // Update is called once per frame
+    
     public void SpeedUp()
     {
-        speed = skipSpeed;
+        speed = skipSpeed / GameManager.Instance.timerDuration;
     }
 }
