@@ -39,7 +39,6 @@ public class GameManager : MonoBehaviour
         //costumes = 4;
         //people = 4;
         //timerDuration = 4;
-        
     }
 
     void SetGame()
